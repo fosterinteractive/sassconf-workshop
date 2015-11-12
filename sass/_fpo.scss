@@ -1,16 +1,22 @@
-@mixin fpo() {
-  background-color: $color--blue;
+$color--blue: blue !default;
+
+@mixin fpo(
+  $ratio: 100%,
+  $bg-color: $color--blue,
+  $color: $color--white,
+  $text: 'FPO') {
+  background-color: $bg-color;
   position: relative;
 
   &:before {
     content: '';
     display: block;
-    padding-bottom: 100%;
+    padding-bottom: $ratio;
   }
-  
+
   &:after {
-    content: 'FPO';
-    color: #fff;
+    content: $text;
+    color: $color;
     font: 20px/1 Helvetica;
     position: absolute;
     top: 50%;
