@@ -1,13 +1,16 @@
 .scw-dummy-image {
-  background-color: #438ccb;
   position: relative; }
+
+.scw-dummy-image {
+  background-color: #333; }
   .scw-dummy-image:before {
     content: '';
-    display: block;
-    padding-bottom: 100%; }
+    display: block; }
+    .scw-dummy-image:before else {
+      padding-bottom: 60%; }
   .scw-dummy-image:after {
     content: "FPO";
-    color: #fff;
+    color: #222;
     font: 20px/1 Helvetica;
     position: absolute;
     top: 50%;

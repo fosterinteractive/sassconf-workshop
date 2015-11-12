@@ -4,7 +4,7 @@
 
 // Our mixin
 .scw-dummy-image {
-  @include fpo();
+  @include fpo(60%, #222, #333);
 }
 
 

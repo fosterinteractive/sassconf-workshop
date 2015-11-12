@@ -1,18 +1,44 @@
-$color--blue: blue !default;
+$fpo-ratio: 100% !default;
+$fpo-color: #fff !default;
+$fpo-bg-color: #438ccb !default;
+$fpo-text: 'FPO' !default;
+
+%fpo--core {
+  position: relative;
+}
 
 @mixin fpo(
-  $ratio: 100%,
-  $bg-color: $color--blue,
-  $color: $color--white,
-  $text: 'FPO') {
+  $ratio: $fpo-ratio,
+  $color: $fpo-color,
+  $bg-color: $fpo-bg-color,
+  $text: $fpo-text
+  ) {
+
+  @extend %fpo--core;
+
+  @if (type-of($ratio) != number) {
+    @error 'Expected a interger or percentage but got a ' + type-of($ratio);
+  }
+
+  @if (abs(lightness($color)) - lightness($bg-color) < 20% ) {
+    @warn 'Background to Foreground color ratio is too low'
+  }
   background-color: $bg-color;
-  position: relative;
+
 
   &:before {
     content: '';
     display: block;
-    padding-bottom: $ratio;
-  }
+
+
+
+    @if (unitless($ratio)) {
+      padding-bottom: percent($ratio);
+    }else {
+      padding-bottom: $ratio;
+    }
+
+    }
 
   &:after {
     content: $text;
