@@ -1,6 +1,25 @@
+
+/// The SVG fill color
+/// @type Color
+
 $bird-color: #231F20 !default;
+
+/// The width and height of the SVG bird
+/// @type Number
 $bird-size: 100px !default;
+
+/// A required prefix for Data URLs
+/// @private
+/// @type String
+
 $_bird-img-prefix: 'data:image/svg+xml;utf8,';
+
+/// The Master List of SVG Birds
+/// @private
+/// @type Map
+/// @prop {String} prefix - The part before the fill attribute
+/// @prop {String} suffix - The part after the fill attribute
+
 $_bird-list: (
   barn-swallow: (
     prefix: '<svg xmlns="http://www.w3.org/2000/svg" width="850.391" height="850.39" viewBox="0 0 850.391 850.39"><g fill="',
@@ -37,20 +56,27 @@ $_bird-list: (
 );
 $bird-default: nth(map-keys($_bird-list), 1) !default;
 
+
 @function build-a-bird ($bird, $color) {
   @return $_bird-img-prefix + map-get(map-get($_bird-list, $bird), prefix) + $color + map-get(map-get($_bird-list, $bird), suffix);
 }
 
+/// Output an SVG Bird on the parent element
+/// @arg {string} $bird [$bird-default] - The type of bird to output
+/// @arg {number} $size [$bird-size] - The width and height of the bird
+/// @arg {color} $color [$bird-color] -
+/// @outputs An after psudo-element with SVG of a bird as the background image
+
 @mixin put-a-bird-on-it (
   $bird: $bird-default,
-  $size: $bird-size, 
+  $size: $bird-size,
   $color: $bird-color
 ) {
   @if (map-has-key($_bird-list, $bird) != true) {
     @error 'Bird not found. Valid options are: ' + map-keys($_bird-list);
   }
   $bird-url: build-a-bird($bird, $color);
-  
+
   @extend %bird-prototype;
 
   &:after {
